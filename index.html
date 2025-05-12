@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es"> 
  <head> 
   <meta charset="UTF-8"> 
@@ -6,6 +6,8 @@
   <title>TaskMaster Pro</title> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.min.js"></script>
+
   <style>
         :root {
             --primary-color: #4361ee;
@@ -737,51 +739,54 @@
     <div class="modal-footer"> <button type="button" class="btn btn-secondary close-modal">Cancelar</button> <button type="button" id="save-task-btn" class="btn btn-primary">Guardar Tarea</button> 
     </div> 
    </div> 
-  </div> <!-- Modal de estadísticas --> 
-  <div class="modal" id="stats-modal"> 
-   <div class="modal-content"> 
-    <div class="modal-header"> 
-     <h3>Estadísticas de Tareas</h3> <span class="close">×</span> 
-    </div> 
-    <div class="modal-body"> 
-     <div class="stats-container"> 
-      <div class="stats-grid"> 
-       <div class="stat-card"> 
-        <h4>Tareas Totales</h4> 
-        <div class="value" id="total-tasks">
-          0 
-        </div> 
-       </div> 
-       <div class="stat-card"> 
-        <h4>Tareas Completadas</h4> 
-        <div class="value" id="completed-tasks">
-          0 
-        </div> 
-       </div> 
-       <div class="stat-card"> 
-        <h4>Tareas Pendientes</h4> 
-        <div class="value" id="pending-tasks">
-          0 
-        </div> 
-       </div> 
-      </div> 
-      <div class="chart-container"> 
-       <canvas id="priority-chart"></canvas> 
-      </div> 
-      <div class="chart-container"> 
-       <canvas id="completion-chart"></canvas> 
-      </div> 
-     </div> 
-    </div> 
-    <div class="modal-footer"> <button type="button" class="btn btn-secondary close-modal">Cerrar</button> 
-    </div> 
-   </div> 
+  </div> 
+  <!-- Modal de estadísticas -->
+<div class="modal" id="stats-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Estadísticas de Tareas</h3> <span class="close">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="stats-container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <i class="fa fa-tasks"></i>
+            <h4>Tareas Totales</h4>
+            <div class="value" id="total-tasks">0</div>
+          </div>
+          <div class="stat-card">
+            <i class="fa fa-check-circle"></i>
+            <h4>Tareas Completadas</h4>
+            <div class="value" id="completed-tasks">0</div>
+          </div>
+          <div class="stat-card">
+            <i class="fa fa-hourglass-half"></i>
+            <h4>Tareas Pendientes</h4>
+            <div class="value" id="pending-tasks">0</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="priority-chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="completion-chart"></canvas>
+        </div>
+      </div>
+    </div>
+   
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary close-modal">Cerrar</button>
+    </div>
+  </div>
+</div>
+
   </div> <!-- Footer --> 
   <footer class="app-footer"> 
    <div class="footer-content"> 
     <div class="creator-info"> <i class="fa fa-user-circle"></i> 
      <div> <span><strong>Powered By Andres Alvarez</strong></span> 
-      <p class="version">Versión Beta 1.0</p> 
+      <p class="version">Versión Beta 1.2</p> 
      </div> 
     </div> <button class="open-modal-btn" onclick="showModal()">Ver Perfil</button> 
    </div> 
@@ -791,187 +796,220 @@
     <h4>Perfil de Creador</h4> 
     <div class="modal-body"> 
      <p><strong>Andres Alvarez</strong></p> 
-     <p>Desarrollador web con más de 5 años de experiencia creando aplicaciones móviles y web. Apasionado por la innovación y siempre aprendiendo nuevas tecnologías.</p> 
-     <h5>Redes Sociales</h5> 
-     <div class="social-icons"> <i class="fa fa-github"></i> <i class="fa fa-linkedin"></i> <i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> 
-     </div> 
+     <p>Desarrollador web con más de 5 años de experiencia creando aplicaciones móviles y web. Apasionado por la innovación y siempre aprendiendo nuevas tecnologías.</p>      
+    <h5 style="color: #f7b42c;">Redes Sociales</h5>
+      <div class="social-icons">
+        <i class="fab fa-github" title="GitHub"></i>
+        <i class="fab fa-linkedin" title="LinkedIn"></i>
+        <i class="fab fa-twitter" title="Twitter"></i>
+        <i class="fab fa-instagram" title="Instagram"></i>
+      </div>
      <h5>Información de la App</h5> 
      <p><strong>Nombre:</strong> App de tareas</p> 
-     <p><strong>Versión:</strong> Beta 1.0</p> 
+     <p><strong>Versión:</strong> Beta 1.2</p> 
      <p><strong>Descripción:</strong> Esta aplicación fue creada con el objetivo de ofrecer una experiencia interactiva de usuario, incluyendo funcionalidades únicas e innovadoras.</p> <button class="close-btn" onclick="closeModal()">Cerrar</button> 
     </div> 
    </div> 
-  </div> <!-- Cookie Consent --> 
-  <div id="cookieConsent" class="cookie-consent"> 
-   <p>Este sitio usa cookies para mejorar tu experiencia. Acepta para continuar navegando.</p> <button onclick="acceptCookies()">Aceptar</button> 
-  </div> <!-- Estilos CSS --> 
+  </div> 
+ <!-- Cookie Consent -->
+<div id="cookieConsent" class="cookie-consent">
+  <p>
+    <i class="fa fa-cookie-bite"></i>
+    Este sitio utiliza cookies para mejorar tu experiencia, analizar el tráfico y personalizar contenido. Al continuar navegando, aceptas nuestra política de cookies.
+  </p>
+  <div class="cookie-buttons">
+    <button onclick="acceptCookies()" class="btn btn-success">
+      <i class="fa fa-check-circle"></i> Aceptar
+    </button>
+    <button onclick="rejectCookies()" class="btn btn-danger">
+      <i class="fa fa-times-circle"></i> Rechazar
+    </button>
+    <button onclick="moreInfo()" class="btn btn-info">
+      <i class="fa fa-info-circle"></i> Más información
+    </button>
+  </div>
+</div>
+ 
+  <!-- Estilos CSS --> 
   <style>
-    /* Estilo para el footer */
-    .app-footer {
-        background: #4cc9f0;
-        color: white;
-        padding: 20px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 2px solid #333;
-        z-index: 100;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
+/* Estilo para el footer */
+.app-footer {
+    background: linear-gradient(45deg, #4cc9f0, #6b91f2);
+    color: white;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #333;
+    z-index: 100;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
 
-    .app-footer:hover {
-        transform: scale(1.05);
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
-    }
+.app-footer:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+}
 
-    .footer-content {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-    }
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
 
-    .creator-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+.creator-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .creator-info i {
-        font-size: 2rem;
-        color: #f7f7f7;
-    }
+.creator-info i {
+    font-size: 2rem;
+    color: #000;
+}
 
-    .creator-info span {
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
+.creator-info span {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #000;
+}
 
-    .version {
-        font-size: 0.9rem;
-        color: #d1d1d1;
-    }
+.version {
+    font-size: 0.9rem;
+    color: #000;
+}
 
-    .open-modal-btn {
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 25px;
-        cursor: pointer;
-        border: none;
-        transition: background-color 0.3s ease;
-    }
+.open-modal-btn {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-    .open-modal-btn:hover {
-        background-color: #f7b42c;
-    }
+.open-modal-btn:hover {
+    background-color: #f7b42c;
+    transform: scale(1.1);
+}
 
-    /* Modal de información del creador */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        text-align: center;
-        z-index: 10000;
-        padding-top: 10%;
-    }
+/* Modal de información del creador */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    z-index: 10000;
+    padding-top: 10%;
+}
 
-    .modal-content {
-        background-color: #222;
-        padding: 20px;
-        border-radius: 10px;
-        display: inline-block;
-        max-width: 90%;
-        text-align: left;
-        transition: transform 0.3s ease;
-    }
+.modal-content {
+    background-color: #d3d3d3; /* Gris más oscuro */
+    color: #000; /* Texto oscuro */
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 600px;
+    text-align: left;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
 
-    .modal-content h4 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-        color: #f8f9fa;
-    }
 
-    .modal-body p {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
 
-    .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        font-size: 1.5rem;
-        margin: 20px 0;
-    }
+.modal-content h4 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #000;
+}
 
-    .social-icons i {
-        cursor: pointer;
-        color: #4cc9f0;
-        transition: color 0.3s ease;
-    }
+.modal-body p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #000;
+}
 
-    .social-icons i:hover {
-        color: #f7b42c;
-    }
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
 
-    .close-btn {
-        background-color: #f7b42c;
-        padding: 10px 20px;
-        border-radius: 25px;
-        cursor: pointer;
-        border: none;
-        color: white;
-        font-size: 1.1rem;
-        transition: background-color 0.3s ease;
-    }
+.social-icons i {
+    cursor: pointer;
+    color: #Yellow;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
 
-    .close-btn:hover {
-        background-color: #333;
-    }
+.social-icons i:hover {
+    color: #f7b42c;
+    transform: scale(1.1);
+}
 
-    /* Estilo para el aviso de cookies */
-    .cookie-consent {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #4cc9f0;
-        color: white;
-        padding: 15px;
-        font-size: 1rem;
-        text-align: center;
-        display: none;
-        z-index: 9999;
-        box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
-    }
+.close-btn {
+    background-color: #f7b42c;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-    .cookie-consent button {
-        background-color: #333;
-        padding: 10px 20px;
-        border-radius: 25px;
-        cursor: pointer;
-        border: none;
-        color: white;
-        font-size: 1.1rem;
-        transition: background-color 0.3s ease;
-    }
+.close-btn:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
 
-    .cookie-consent button:hover {
-        background-color: #f7b42c;
-    }
-</style> <!-- Script JS --> 
+/* Estilo para el aviso de cookies */
+.cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4cc9f0;
+    color: white;
+    padding: 15px;
+    font-size: 1rem;
+    text-align: center;
+    display: none;
+    z-index: 9999;
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px 10px 0 0;
+}
+
+.cookie-consent button {
+    background-color: #333;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cookie-consent button:hover {
+    background-color: #f7b42c;
+    transform: scale(1.05);
+}
+
+</style> 
+<!-- Script JS --> 
   <script>
     // Función para mostrar el modal
     function showModal() {
@@ -985,16 +1023,43 @@
         document.body.style.overflow = 'auto'; // Reactiva el scroll cuando se cierra el modal
     }
 
-    // Función para aceptar cookies
-    function acceptCookies() {
-        localStorage.setItem('cookiesAccepted', 'true');
-        document.getElementById('cookieConsent').style.display = 'none';
-    }
+  function acceptCookies() {
+  localStorage.setItem('cookiesAccepted', 'true');
+  document.getElementById('cookieConsent').style.display = 'none';
+}
 
-    // Mostrar el aviso de cookies si no ha sido aceptado
-    if (!localStorage.getItem('cookiesAccepted')) {
-        document.getElementById('cookieConsent').style.display = 'block';
-    }
+function rejectCookies() {
+  localStorage.setItem('cookiesAccepted', 'false');
+  document.getElementById('cookieConsent').style.display = 'none';
+}
+
+function moreInfo() {
+  Swal.fire({
+    icon: 'info',
+    title: 'Política de Cookies',
+    html: `
+      <p>Utilizamos cookies para:</p>
+      <ul style="text-align: left;">
+        <li><i class="fa fa-check"></i> Mejorar la experiencia del usuario</li>
+        <li><i class="fa fa-check"></i> Recordar preferencias</li>
+        <li><i class="fa fa-check"></i> Analizar el tráfico del sitio</li>
+      </ul>
+      <p>Puedes cambiar tu decisión en cualquier momento desde la configuración.</p>
+    `,
+    confirmButtonText: 'Entendido'
+  });
+}
+
+// Mostrar solo si aún no se aceptó/rechazó
+window.addEventListener('load', () => {
+  const cookies = localStorage.getItem('cookiesAccepted');
+  if (!cookies) {
+    document.getElementById('cookieConsent').style.display = 'block';
+  } else {
+    document.getElementById('cookieConsent').style.display = 'none';
+  }
+});
+
 </script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script> 
