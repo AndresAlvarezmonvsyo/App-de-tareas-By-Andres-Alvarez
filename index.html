@@ -1,13 +1,12 @@
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskMaster Pro</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
-    <style>
+<!doctype html>
+<html lang="es"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>TaskMaster Pro</title> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"> 
+  <style>
         :root {
             --primary-color: #4361ee;
             --secondary-color: #3f37c9;
@@ -649,212 +648,358 @@
             border: 2px dashed var(--primary-color);
             background-color: rgba(72, 149, 239, 0.1);
         }
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1><i class="fas fa-tasks"></i> TaskMaster Pro</h1>
-            <div class="header-actions">
-                <button id="new-task-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Tarea</button>
-                <button id="stats-btn" class="btn btn-secondary"><i class="fas fa-chart-bar"></i> Estadísticas</button>
-            </div>
-        </header>
-
-        <aside class="sidebar">
-            <ul class="filters">
-                <li class="active"><i class="fas fa-list"></i> Todas las Tareas</li>
-                <li><i class="fas fa-star"></i> Importantes</li>
-                <li><i class="fas fa-calendar-day"></i> Hoy</li>
-                <li><i class="fas fa-clock"></i> Pendientes</li>
-                <li><i class="fas fa-check-circle"></i> Completadas</li>
-                <li><i class="fas fa-project-diagram"></i> Proyectos</li>
-            </ul>
-            
-            <div class="tags-container">
-                <h3><i class="fas fa-tags"></i> Etiquetas</h3>
-                <div class="tags-list">
-                    <span class="tag">Trabajo</span>
-                    <span class="tag">Personal</span>
-                    <span class="tag">Estudio</span>
-                    <span class="tag">Urgente</span>
-                </div>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <div class="tasks-header">
-                <h2><i class="fas fa-list-check"></i> Mis Tareas</h2>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Buscar tareas...">
-                </div>
-            </div>
-
-            <div class="task-list" id="task-list">
-                <!-- Las tareas se agregarán dinámicamente aquí -->
-            </div>
-        </main>
-    </div>
-
-    <!-- Modal para nueva/editar tarea -->
-    <div class="modal" id="task-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Nueva Tarea</h3>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="task-form">
-                    <input type="hidden" id="task-id">
-                    <div class="form-group">
-                        <label for="task-title">Título</label>
-                        <input type="text" class="form-control" id="task-title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="task-description">Descripción</label>
-                        <textarea class="form-control" id="task-description"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="task-due-date">Fecha límite</label>
-                            <input type="date" class="form-control" id="task-due-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="task-priority">Prioridad</label>
-                            <select class="form-control" id="task-priority">
-                                <option value="low">Baja</option>
-                                <option value="medium" selected>Media</option>
-                                <option value="high">Alta</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Archivos adjuntos</label>
-                        <div class="file-upload">
-                            <button type="button" class="file-upload-btn">
-                                <i class="fas fa-paperclip"></i> Adjuntar archivos
-                            </button>
-                            <input type="file" id="file-input" multiple accept="image/*,.pdf">
-                        </div>
-                        <div class="preview-files" id="preview-files">
-                            <!-- Vista previa de archivos se mostrará aquí -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="task-tags">Etiquetas (separadas por comas)</label>
-                        <input type="text" class="form-control" id="task-tags" placeholder="ej. trabajo, importante, proyecto">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-modal">Cancelar</button>
-                <button type="button" id="save-task-btn" class="btn btn-primary">Guardar Tarea</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de estadísticas -->
-    <div class="modal" id="stats-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Estadísticas de Tareas</h3>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="stats-container">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h4>Tareas Totales</h4>
-                            <div class="value" id="total-tasks">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <h4>Tareas Completadas</h4>
-                            <div class="value" id="completed-tasks">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <h4>Tareas Pendientes</h4>
-                            <div class="value" id="pending-tasks">0</div>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="priority-chart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="completion-chart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-<!-- Agrega esto justo antes de cerrar el div.app-container -->
-<footer class="app-footer" style="grid-column: 1 / -1; background-color: #1b263b; color: white; padding: 15px 20px; text-align: center; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #3a506b;">
-    <div class="creator-info" style="display: flex; align-items: center; gap: 10px;">
-        <i class="fa fa-user-circle" style="color: #4cc9f0; font-size: 1.2rem;"></i>
-        <span><strong style="color: #f8f9fa;"> Powered By Andres Alvarez <br> Version de prueba</strong></span>
-    </div>
-    <div class="social-links" style="display: flex; gap: 15px;">
-        <a href="#" style="color: white; font-size: 1.1rem;"><i class="fa fa-github"></i></a>
-        <a href="#" style="color: white; font-size: 1.1rem;"><i class="fa fa-linkedin"></i></a>
-        <a href="#" style="color: white; font-size: 1.1rem;"><i class="fa fa-twitter"></i></a>
-    </div>
-</footer>
-<!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<style>
-  body.bloqueado {
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.3;
-    transition: opacity 0.3s ease-in-out;
+    </style> 
+ </head> 
+ <body> 
+  <div class="app-container"> 
+   <header class="app-header"> 
+    <h1><i class="fas fa-tasks"></i> TaskMaster Pro</h1> 
+    <div class="header-actions"> <button id="new-task-btn" class="btn btn-primary"> <i class="fas fa-plus"></i> <span>Nueva Tarea</span> </button> <button id="stats-btn" class="btn btn-secondary"> <i class="fas fa-chart-bar"></i> <span>Estadísticas</span> </button> 
+    </div> 
+   </header> 
+   <style>
+  /* Para pantallas pequeñas (móviles) */
+@media (max-width: 767px) {
+  .header-actions button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px; /* Puedes ajustar el tamaño del botón */
+    height: 40px; /* Ajusta según sea necesario */
+    padding: 0;
+    
   }
-</style>
-
-<script>
-  let alertaZoomMostrada = false;
-
-  function detectarZoom() {
-    const zoom = window.outerWidth / window.innerWidth;
-    const cuerpo = document.body;
-
-    if (zoom !== 1) {
-      cuerpo.classList.add("bloqueado");
-
-      if (!alertaZoomMostrada) {
-        alertaZoomMostrada = true;
-
-        Swal.fire({
-          title: '🔍 Zoom Detectado',
-          text: 'Por favor, restablece el zoom al 100% (Ctrl+0 o Cmd+0) para continuar.',
-          icon: 'warning',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          confirmButtonText: 'Ok, entendido'
-        });
-      }
-
-    } else {
-      cuerpo.classList.remove("bloqueado");
-
-      if (alertaZoomMostrada) {
-        Swal.close();
-        alertaZoomMostrada = false;
-      }
+  
+  .header-actions button span {
+    display: none; /* Oculta los textos */
+  }
+}
+  
+</style> 
+   <aside class="sidebar"> 
+    <ul class="filters"> 
+     <li class="active"><i class="fas fa-list"></i> Todas las Tareas</li> 
+     <li><i class="fas fa-star"></i> Importantes</li> 
+     <li><i class="fas fa-calendar-day"></i> Hoy</li> 
+     <li><i class="fas fa-clock"></i> Pendientes</li> 
+     <li><i class="fas fa-check-circle"></i> Completadas</li> 
+     <li><i class="fas fa-project-diagram"></i> Proyectos</li> 
+    </ul> 
+    <div class="tags-container"> 
+     <h3><i class="fas fa-tags"></i> Etiquetas</h3> 
+     <div class="tags-list"> <span class="tag">Trabajo</span> <span class="tag">Personal</span> <span class="tag">Estudio</span> <span class="tag">Urgente</span> 
+     </div> 
+    </div> 
+   </aside> 
+   <main class="main-content"> 
+    <div class="tasks-header"> 
+     <h2><i class="fas fa-list-check"></i> Mis Tareas</h2> 
+     <div class="search-box"> <i class="fas fa-search"></i> 
+      <input type="text" placeholder="Buscar tareas..."> 
+     </div> 
+    </div> 
+    <div class="task-list" id="task-list"> <!-- Las tareas se agregarán dinámicamente aquí --> 
+    </div> 
+   </main> 
+  </div> <!-- Modal para nueva/editar tarea --> 
+  <div class="modal" id="task-modal"> 
+   <div class="modal-content"> 
+    <div class="modal-header"> 
+     <h3 id="modal-title">Nueva Tarea</h3> <span class="close">×</span> 
+    </div> 
+    <div class="modal-body"> 
+     <form id="task-form"> 
+      <input type="hidden" id="task-id"> 
+      <div class="form-group"> <label for="task-title">Título</label> 
+       <input type="text" class="form-control" id="task-title" required> 
+      </div> 
+      <div class="form-group"> <label for="task-description">Descripción</label> <textarea class="form-control" id="task-description"></textarea> 
+      </div> 
+      <div class="form-row"> 
+       <div class="form-group"> <label for="task-due-date">Fecha límite</label> 
+        <input type="date" class="form-control" id="task-due-date"> 
+       </div> 
+       <div class="form-group"> <label for="task-priority">Prioridad</label> <select class="form-control" id="task-priority"> <option value="low">Baja</option> <option value="medium" selected>Media</option> <option value="high">Alta</option> </select> 
+       </div> 
+      </div> 
+      <div class="form-group"> <label>Archivos adjuntos</label> 
+       <div class="file-upload"> <button type="button" class="file-upload-btn"> <i class="fas fa-paperclip"></i> Adjuntar archivos </button> 
+        <input type="file" id="file-input" multiple accept="image/*,.pdf"> 
+       </div> 
+       <div class="preview-files" id="preview-files"> <!-- Vista previa de archivos se mostrará aquí --> 
+       </div> 
+      </div> 
+      <div class="form-group"> <label for="task-tags">Etiquetas (separadas por comas)</label> 
+       <input type="text" class="form-control" id="task-tags" placeholder="ej. trabajo, importante, proyecto"> 
+      </div> 
+     </form> 
+    </div> 
+    <div class="modal-footer"> <button type="button" class="btn btn-secondary close-modal">Cancelar</button> <button type="button" id="save-task-btn" class="btn btn-primary">Guardar Tarea</button> 
+    </div> 
+   </div> 
+  </div> <!-- Modal de estadísticas --> 
+  <div class="modal" id="stats-modal"> 
+   <div class="modal-content"> 
+    <div class="modal-header"> 
+     <h3>Estadísticas de Tareas</h3> <span class="close">×</span> 
+    </div> 
+    <div class="modal-body"> 
+     <div class="stats-container"> 
+      <div class="stats-grid"> 
+       <div class="stat-card"> 
+        <h4>Tareas Totales</h4> 
+        <div class="value" id="total-tasks">
+          0 
+        </div> 
+       </div> 
+       <div class="stat-card"> 
+        <h4>Tareas Completadas</h4> 
+        <div class="value" id="completed-tasks">
+          0 
+        </div> 
+       </div> 
+       <div class="stat-card"> 
+        <h4>Tareas Pendientes</h4> 
+        <div class="value" id="pending-tasks">
+          0 
+        </div> 
+       </div> 
+      </div> 
+      <div class="chart-container"> 
+       <canvas id="priority-chart"></canvas> 
+      </div> 
+      <div class="chart-container"> 
+       <canvas id="completion-chart"></canvas> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="modal-footer"> <button type="button" class="btn btn-secondary close-modal">Cerrar</button> 
+    </div> 
+   </div> 
+  </div> <!-- Footer --> 
+  <footer class="app-footer"> 
+   <div class="footer-content"> 
+    <div class="creator-info"> <i class="fa fa-user-circle"></i> 
+     <div> <span><strong>Powered By Andres Alvarez</strong></span> 
+      <p class="version">Versión Beta 1.0</p> 
+     </div> 
+    </div> <button class="open-modal-btn" onclick="showModal()">Ver Perfil</button> 
+   </div> 
+  </footer> <!-- Modal de información del creador --> 
+  <div id="profileModal" class="modal"> 
+   <div class="modal-content"> 
+    <h4>Perfil de Creador</h4> 
+    <div class="modal-body"> 
+     <p><strong>Andres Alvarez</strong></p> 
+     <p>Desarrollador web con más de 5 años de experiencia creando aplicaciones móviles y web. Apasionado por la innovación y siempre aprendiendo nuevas tecnologías.</p> 
+     <h5>Redes Sociales</h5> 
+     <div class="social-icons"> <i class="fa fa-github"></i> <i class="fa fa-linkedin"></i> <i class="fa fa-twitter"></i> <i class="fa fa-instagram"></i> 
+     </div> 
+     <h5>Información de la App</h5> 
+     <p><strong>Nombre:</strong> App de tareas</p> 
+     <p><strong>Versión:</strong> Beta 1.0</p> 
+     <p><strong>Descripción:</strong> Esta aplicación fue creada con el objetivo de ofrecer una experiencia interactiva de usuario, incluyendo funcionalidades únicas e innovadoras.</p> <button class="close-btn" onclick="closeModal()">Cerrar</button> 
+    </div> 
+   </div> 
+  </div> <!-- Cookie Consent --> 
+  <div id="cookieConsent" class="cookie-consent"> 
+   <p>Este sitio usa cookies para mejorar tu experiencia. Acepta para continuar navegando.</p> <button onclick="acceptCookies()">Aceptar</button> 
+  </div> <!-- Estilos CSS --> 
+  <style>
+    /* Estilo para el footer */
+    .app-footer {
+        background: #4cc9f0;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 2px solid #333;
+        z-index: 100;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        font-size: 1rem;
+        transition: all 0.3s ease;
     }
-  }
 
-  window.addEventListener('resize', detectarZoom);
-  window.addEventListener('load', detectarZoom);
-</script>
+    .app-footer:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+    }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script>
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+
+    .creator-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .creator-info i {
+        font-size: 2rem;
+        color: #f7f7f7;
+    }
+
+    .creator-info span {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .version {
+        font-size: 0.9rem;
+        color: #d1d1d1;
+    }
+
+    .open-modal-btn {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .open-modal-btn:hover {
+        background-color: #f7b42c;
+    }
+
+    /* Modal de información del creador */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        text-align: center;
+        z-index: 10000;
+        padding-top: 10%;
+    }
+
+    .modal-content {
+        background-color: #222;
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        max-width: 90%;
+        text-align: left;
+        transition: transform 0.3s ease;
+    }
+
+    .modal-content h4 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #f8f9fa;
+    }
+
+    .modal-body p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+
+    .social-icons i {
+        cursor: pointer;
+        color: #4cc9f0;
+        transition: color 0.3s ease;
+    }
+
+    .social-icons i:hover {
+        color: #f7b42c;
+    }
+
+    .close-btn {
+        background-color: #f7b42c;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .close-btn:hover {
+        background-color: #333;
+    }
+
+    /* Estilo para el aviso de cookies */
+    .cookie-consent {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #4cc9f0;
+        color: white;
+        padding: 15px;
+        font-size: 1rem;
+        text-align: center;
+        display: none;
+        z-index: 9999;
+        box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .cookie-consent button {
+        background-color: #333;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .cookie-consent button:hover {
+        background-color: #f7b42c;
+    }
+</style> <!-- Script JS --> 
+  <script>
+    // Función para mostrar el modal
+    function showModal() {
+        document.getElementById('profileModal').style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Desactiva el scroll al mostrar el modal
+    }
+
+    // Función para cerrar el modal
+    function closeModal() {
+        document.getElementById('profileModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Reactiva el scroll cuando se cierra el modal
+    }
+
+    // Función para aceptar cookies
+    function acceptCookies() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookieConsent').style.display = 'none';
+    }
+
+    // Mostrar el aviso de cookies si no ha sido aceptado
+    if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieConsent').style.display = 'block';
+    }
+</script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script> 
+  <script>
         $(document).ready(function() {
     // Variables globales
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -1268,6 +1413,6 @@
         }
     });
 });
-    </script>
-</body>
+    </script> 
+ </body>
 </html>
